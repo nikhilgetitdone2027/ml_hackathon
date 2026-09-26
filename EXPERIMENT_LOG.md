@@ -129,7 +129,37 @@ Functions:
 
 ---
 
-## EXP-005 · End-to-End Pipeline Run (PENDING — awaiting data)
+## EXP-005 · AST Validation — Phase 6 (optimizer.py)
+**Date:** 2026-09-26
+**Type:** Code Validation (no data)
+**Status:** PASSED
+
+**Hypothesis:** `src/optimizer.py` is syntactically correct and exports the expected public API.
+
+**Method:** `ast.parse()` + function name extraction.
+
+**Results:**
+```
+AST parse: OK
+  resolve_constraints - FOUND
+  expected_f05 - FOUND
+  optimise_per_entity - FOUND
+  optimise_all_entities - FOUND
+  write_matching_results - FOUND
+  save_post_constraint_predictions - FOUND
+  validate_matching_results - FOUND
+  evaluate_with_ground_truth - FOUND
+  run - FOUND
+  load_matching_results - FOUND
+```
+
+**Conclusion:** All 10 required functions present. File is syntactically valid.
+Notable: `validate_matching_results()` now lives in Phase 6 (inline) rather
+than only in Phase 7 — provides earlier error detection in the pipeline.
+
+---
+
+
 **Date:** TBD
 **Type:** Full pipeline execution
 **Status:** PENDING

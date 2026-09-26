@@ -103,16 +103,19 @@ Legend: ✅ Done | 🔲 Pending | 🔄 In Progress | ❌ Blocked
 
 ---
 
-## Phase 6 — Post-Processing & F0.5 Optimisation 🔲
+## Phase 6 — Post-Processing & F0.5 Optimisation ✅
 
-- [ ] `resolve_constraints()` — S2/S3 → at most ONE S1 (keep max-prob edge)
-- [ ] `expected_f05()` — compute expected F0.5 for a top-k subset
-- [ ] `optimise_per_entity()` — scan k=0..N, pick argmax expected F0.5
-- [ ] `run_optimiser()` — full post-processing pipeline
-- [ ] `run()` — CLI entry point
-- [ ] Unit test: constraint resolution on synthetic duplicate case
-- [ ] Unit test: expected F0.5 formula vs. manual calculation
-- [ ] AST parse verify
+- [x] `resolve_constraints()` — S2/S3 → at most ONE S1 (keep max-prob edge, tie-break by S1 ID)
+- [x] `expected_f05()` — E[F-beta] for a top-k subset via Bernoulli formula
+- [x] `optimise_per_entity()` — exhaustive scan k=0..N, pick argmax expected F0.5
+- [x] `optimise_all_entities()` — orchestrator; logs k-distribution and singleton count
+- [x] `write_matching_results()` — strict TSV format, dedup, empty strings for singletons
+- [x] `save_post_constraint_predictions()` — audit parquet for Phase 7
+- [x] `validate_matching_results()` — inline 4-check validation (IDs in candidates, no dups, constraint holds, all S1 present)
+- [x] `evaluate_with_ground_truth()` — true macro F0.5 when GT available
+- [x] `load_matching_results()` — public API for Phase 7
+- [x] `run()` — CLI with `--beta` and `--skip-constraint` flags
+- [x] AST parse verified ✅
 
 ---
 

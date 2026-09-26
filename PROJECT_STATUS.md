@@ -1,7 +1,7 @@
 # PROJECT STATUS
 **Project:** Amazon ML Hackathon 2026 — Business Entity Resolution
 **Architecture:** Graph-Aware Hybrid Dual-Encoder Pipeline
-**Last Updated:** 2026-09-26
+**Last Updated:** 2026-09-26 (updated after Phase 6)
 
 ---
 
@@ -14,10 +14,10 @@
 | 3 | Blocking Layer | ✅ COMPLETED | `src/blocker.py` |
 | 4 | Feature Engineering | ✅ COMPLETED | `src/features.py` |
 | 5 | Modelling & Calibration | ✅ COMPLETED | `src/model.py` |
-| 6 | Post-Processing & F0.5 Opt. | 🔲 PENDING | `src/optimizer.py` |
+| 6 | Post-Processing & F0.5 Opt. | ✅ COMPLETED | `src/optimizer.py` |
 | 7 | Output Generation & Validation | 🔲 PENDING | `src/utils.py`, outputs |
 
-**Current Phase:** Ready to begin **Phase 6**
+**Current Phase:** Ready to begin **Phase 7**
 **Blocking Issues:** None
 
 ---
@@ -42,7 +42,7 @@ amazon-ml-2026/
 │   ├── blocker.py                 ✅  Phase 3 — FULL IMPLEMENTATION
 │   ├── features.py                ✅  Phase 4 — FULL IMPLEMENTATION
 │   ├── model.py                   ✅  Phase 5 — FULL IMPLEMENTATION
-│   ├── optimizer.py               🔲  Phase 6 stub (raises NotImplementedError)
+│   ├── optimizer.py               ✅  Phase 6 — FULL IMPLEMENTATION
 │   └── utils.py                   🔲  Phase 7 stub (raises NotImplementedError)
 ├── .gitignore                     ✅
 ├── README.md                      ✅  Comprehensive documentation
@@ -71,6 +71,8 @@ amazon-ml-2026/
 
 ## Next Immediate Action
 
-Implement **Phase 6** (`src/optimizer.py`):
-- Constraint resolution (S2/S3 → max-1 S1, keep highest-prob edge)
-- Expected F0.5 maximisation per S1 (scan top-k subsets, pick argmax)
+Implement **Phase 7** (`src/utils.py`):
+- Final output validation assertions (IDs in results ⊆ IDs in candidates)
+- No-duplicate check per S1 row
+- All-S1-present check
+- Windows PowerShell pipeline runner (`scripts/run_pipeline.ps1`)

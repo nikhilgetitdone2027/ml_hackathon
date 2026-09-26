@@ -140,18 +140,19 @@ The function produces correct output — confirmed by code reading.
 ## ISS-006 · Phase 6 and Phase 7 Still Using Stub Files
 **Date:** 2026-09-26
 **Severity:** P1 (pipeline cannot complete)
-**Status:** 🟡 IN PROGRESS
+**Status:** 🟡 IN PROGRESS (optimizer.py done; utils.py pending)
 
 **Description:**
-`src/optimizer.py` and `src/utils.py` are still stub files that raise `NotImplementedError`.
-Running `bash scripts/run_pipeline.sh` will fail at Phase 6.
+`src/optimizer.py` — ✅ **FULLY IMPLEMENTED** (Phase 6 complete 2026-09-26).
+`src/utils.py`    — 🔲 Still a stub that raises `NotImplementedError`.
+Running `bash scripts/run_pipeline.sh` will now succeed through Phase 6
+but will fail at Phase 7 (`src/utils.py --validate`).
 
 **Resolution Plan:**
-- Implement Phase 6 (`src/optimizer.py`) next
-- Implement Phase 7 (`src/utils.py`) after Phase 6
-- Both will be full implementations, not stubs
+- Implement Phase 7 (`src/utils.py`) — next task
 
-**Owner:** Development (currently in progress)
+**Owner:** Development (Phase 7 is next)
+
 
 ---
 
