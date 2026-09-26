@@ -29,8 +29,10 @@ data/*.csv
 data/*.json
 
 # Output artefacts (large; share via object storage instead)
-output/cache/
-output/models/
+output/cache/*
+!output/cache/.gitkeep
+output/models/*
+!output/models/.gitkeep
 output/*.tsv
 
 # OS
