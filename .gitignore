@@ -1,0 +1,50 @@
+# ============================================================
+# .gitignore — Amazon ML Hackathon 2026
+# ============================================================
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Data (do NOT commit raw or generated data)
+data/*.tsv
+data/*.csv
+data/*.json
+
+# Output artefacts (large; share via object storage instead)
+output/cache/
+output/models/
+output/*.tsv
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Hugging Face model cache
+~/.cache/huggingface/
+
+# Logs
+*.log
+logs/

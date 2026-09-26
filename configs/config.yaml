@@ -1,0 +1,89 @@
+# ============================================================
+# Amazon ML Hackathon 2026 — Business Entity Resolution
+# Master Configuration File
+# ============================================================
+
+# ── Paths ────────────────────────────────────────────────────
+paths:
+  data_dir:         "data/"
+  output_dir:       "output/"
+  source1:          "data/source1.tsv"
+  source2:          "data/source2.tsv"
+  source3:          "data/source3.tsv"
+  ground_truth:     "data/ground_truth.tsv"     # training labels (S1_id → S2/S3_ids)
+  candidate_pairs:  "output/candidate_pairs.tsv"
+  matching_results: "output/matching_results.tsv"
+  model_dir:        "output/models/"
+  cache_dir:        "output/cache/"
+
+# ── Preprocessing ────────────────────────────────────────────
+preprocessing:
+  lowercase:            true
+  strip_accents:        true     # Unicode NFD decomposition
+  remove_punctuation:   true
+  expand_abbreviations: true     # uses mined token-replacement dict
+  min_token_freq:       5        # minimum freq for a substitution to be mined
+  top_k_substitutions:  200      # keep only the top-k most frequent pairs
+
+# ── Blocking ─────────────────────────────────────────────────
+blocking:
+  top_n_per_entity:     50       # max candidates per S1 entity (hard cap)
+
+  tfidf:
+    analyzer:           "char_wb"
+    ngram_range:        [2, 4]
+    max_features:       200000
+    top_k:              30       # top-k from TF-IDF blocker before merge
+
+  semantic:
+    model_name:         "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+    batch_size:         256
+    normalize_embeddings: true
+    faiss_index_type:   "Flat"   # "IVF" for large datasets (>500k records)
+    top_k:              30       # top-k from FAISS blocker before merge
+
+# ── Features ─────────────────────────────────────────────────
+features:
+  jaro_winkler_prefix_weight: 0.1
+  number_veto:
+    enabled:            true
+    pin_regex:          '\\b\\d{4,7}\\b'       # 4–7 digit postal/ZIP code
+    street_num_regex:   '\\b\\d{1,4}[a-z]?\\b' # street number optionally followed by letter
+  competition_features:
+    enabled:            true
+    similarity_col:     "minilm_cosine"         # column to compute margin over
+  transitivity_features:
+    enabled:            true
+    max_pairs:          500                      # cap on cross-source pairs per S1
+
+# ── Modelling ────────────────────────────────────────────────
+model:
+  cv_n_splits:          5
+  cv_group_col:         "source1_entity_id"     # group-k-fold on S1 IDs
+  xgboost:
+    objective:          "binary:logistic"
+    eval_metric:        "aucpr"
+    n_estimators:       800
+    max_depth:          6
+    learning_rate:      0.05
+    subsample:          0.8
+    colsample_bytree:   0.8
+    min_child_weight:   5
+    scale_pos_weight:   10                       # class imbalance compensation
+    tree_method:        "hist"
+    random_state:       42
+  calibration:
+    method:             "isotonic"               # isotonic regression OOF calibration
+
+# ── Post-Processing ──────────────────────────────────────────
+postprocessing:
+  constraint_resolution:
+    enabled:            true                     # enforce S2/S3 → at most one S1
+  f05_optimization:
+    enabled:            true
+    beta:               0.5                      # F-beta parameter
+    prob_grid_steps:    200                      # resolution for expected-F scan
+
+# ── Reproducibility ──────────────────────────────────────────
+seed: 42
+n_jobs: -1                                       # -1 = use all CPU cores
