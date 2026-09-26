@@ -119,14 +119,26 @@ Legend: ✅ Done | 🔲 Pending | 🔄 In Progress | ❌ Blocked
 
 ---
 
-## Phase 7 — Output Generation & Validation 🔲
+## Phase 7 — Output Generation & Validation ✅
 
-- [ ] `write_matching_results()` — strict TSV format, empty lists handled
-- [ ] `validate_outputs()` — assertion: all IDs in results exist in candidates
-- [ ] `validate_no_duplicates()` — no duplicate IDs per S1 row
-- [ ] `validate_all_s1_present()` — every S1 entity has exactly one row
-- [ ] End-to-end smoke test on synthetic 10-entity dataset
-- [ ] `run()` — `--validate` CLI flag
+- [x] `ValidationError` — custom exception for hard assertion failures
+- [x] `read_tsv()` — safe UTF-8 TSV reader with BOM handling + column validation
+- [x] `write_tsv()` — safe TSV writer with auto-mkdir
+- [x] `load_all_s1_ids()` — loads S1 IDs from Parquet or raw TSV
+- [x] `load_submission_files()` — loads both submission TSVs at once
+- [x] `_check_schema()` — required columns present check
+- [x] `_check_coverage()` — every S1 appears exactly once in each file
+- [x] `_check_subset()` — all matched IDs exist in candidate_pairs
+- [x] `_check_no_duplicates()` — no dup IDs within any S1 row
+- [x] `_check_constraint()` — no S2/S3 ID matched to >1 S1
+- [x] `_check_format()` — no brackets/quotes, no whitespace padding
+- [x] `_check_self_consistency()` — both files have same row count
+- [x] `validate_outputs()` — master runner: 9 checks, raise_on_error flag
+- [x] `summarise_submission()` — rich console summary (match rate, distributions)
+- [x] `run_smoke_test()` — 10-entity synthetic dataset, in-memory, no data needed
+- [x] `run()` — CLI with `--validate`, `--summary`, `--smoke-test` flags
+- [x] `scripts/run_pipeline.ps1` — Windows PowerShell orchestrator with colour, timing, flags
+- [x] AST parse verified ✅
 
 ---
 

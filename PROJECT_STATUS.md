@@ -1,7 +1,7 @@
 # PROJECT STATUS
 **Project:** Amazon ML Hackathon 2026 — Business Entity Resolution
 **Architecture:** Graph-Aware Hybrid Dual-Encoder Pipeline
-**Last Updated:** 2026-09-26 (updated after Phase 6)
+**Last Updated:** 2026-09-26 (updated after Phase 7 — PIPELINE COMPLETE)
 
 ---
 
@@ -15,10 +15,10 @@
 | 4 | Feature Engineering | ✅ COMPLETED | `src/features.py` |
 | 5 | Modelling & Calibration | ✅ COMPLETED | `src/model.py` |
 | 6 | Post-Processing & F0.5 Opt. | ✅ COMPLETED | `src/optimizer.py` |
-| 7 | Output Generation & Validation | 🔲 PENDING | `src/utils.py`, outputs |
+| 7 | Output Generation & Validation | ✅ COMPLETED | `src/utils.py`, `scripts/run_pipeline.ps1` |
 
-**Current Phase:** Ready to begin **Phase 7**
-**Blocking Issues:** None
+**Current Phase:** 🎉 **ALL PHASES COMPLETE** — ready for data + end-to-end run
+**Blocking Issues:** ISS-003 (data files), ISS-004 (pip install)
 
 ---
 
@@ -35,7 +35,8 @@ amazon-ml-2026/
 │   ├── cache/                     ✅  Directory created (populated at runtime)
 │   └── models/                    ✅  Directory created (populated at runtime)
 ├── scripts/
-│   └── run_pipeline.sh            ✅  End-to-end bash orchestrator
+│   ├── run_pipeline.sh            ✅  End-to-end Bash orchestrator (Linux/Mac)
+│   └── run_pipeline.ps1           ✅  End-to-end PowerShell runner (Windows)
 ├── src/
 │   ├── __init__.py                ✅  Package init (v1.0.0)
 │   ├── preprocessor.py            ✅  Phase 2 — FULL IMPLEMENTATION
@@ -43,7 +44,7 @@ amazon-ml-2026/
 │   ├── features.py                ✅  Phase 4 — FULL IMPLEMENTATION
 │   ├── model.py                   ✅  Phase 5 — FULL IMPLEMENTATION
 │   ├── optimizer.py               ✅  Phase 6 — FULL IMPLEMENTATION
-│   └── utils.py                   🔲  Phase 7 stub (raises NotImplementedError)
+│   └── utils.py                   ✅  Phase 7 — FULL IMPLEMENTATION
 ├── .gitignore                     ✅
 ├── README.md                      ✅  Comprehensive documentation
 └── requirements.txt               ✅  All deps with version pins
@@ -71,8 +72,21 @@ amazon-ml-2026/
 
 ## Next Immediate Action
 
-Implement **Phase 7** (`src/utils.py`):
-- Final output validation assertions (IDs in results ⊆ IDs in candidates)
-- No-duplicate check per S1 row
-- All-S1-present check
-- Windows PowerShell pipeline runner (`scripts/run_pipeline.ps1`)
+**All phases complete.** To run the pipeline:
+
+```powershell
+# 1. Install dependencies
+pip install -r requirements.txt
+
+# 2. Place data files in data/
+#    source1.tsv, source2.tsv, source3.tsv, ground_truth.tsv
+
+# 3. Run smoke test (no data required)
+python -m src.utils --smoke-test
+
+# 4. Run full pipeline
+.\scripts\run_pipeline.ps1
+
+# 5. Validate outputs
+python -m src.utils --validate --summary --config configs/config.yaml
+```

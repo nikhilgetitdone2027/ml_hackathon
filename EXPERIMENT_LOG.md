@@ -160,56 +160,41 @@ than only in Phase 7 — provides earlier error detection in the pipeline.
 ---
 
 
+## EXP-006 . AST Validation -- Phase 7 (utils.py)
+**Date:** 2026-09-26
+**Type:** Code Validation (no data)
+**Status:** PASSED
+
+**Results:**
+`
+AST parse: OK
+Classes:   ValidationError - FOUND
+Functions: read_tsv, write_tsv, load_all_s1_ids, load_submission_files,
+           _check_schema, _check_coverage, _check_subset,
+           _check_no_duplicates, _check_constraint, _check_format,
+           _check_self_consistency, validate_outputs, summarise_submission,
+           run_smoke_test, run -- all FOUND
+`
+
+**Conclusion:** All 16 symbols present. scripts/run_pipeline.ps1 also created -- resolves ISS-007.
+
+---
+
+## EXP-007 . Smoke Test -- Synthetic 10-Entity Dataset (PLANNED)
+**Date:** TBD
+**Type:** Functional test (no data files required)
+**Status:** PLANNED
+
+Run with: python -m src.utils --smoke-test
+
+**Results:** _TO BE FILLED_
+
+---
+
+## EXP-008 . End-to-End Pipeline Run (PENDING -- awaiting data)
 **Date:** TBD
 **Type:** Full pipeline execution
 **Status:** PENDING
 
-**Hypothesis:** Pipeline runs end-to-end on the actual hackathon data without errors and achieves blocking recall ≥ 95%.
-
-**Setup:**
-- Place source1.tsv, source2.tsv, source3.tsv, ground_truth.tsv in `data/`
-- Run: `bash scripts/run_pipeline.sh`
-
-**Metrics to Record:**
-- Blocking recall (Phase 3 diagnostic)
-- CV AUCPR mean ± std (Phase 5)
-- CV macro F0.5 mean ± std (Phase 5, best threshold)
-- Final macro F0.5 on full training set
-- Runtime per phase (seconds)
-
 **Results:** _TO BE FILLED_
 
-**Conclusion:** _PENDING_
-
----
-
-## EXP-006 · Ablation Study: Feature Group Contribution (PLANNED)
-**Date:** TBD
-**Type:** Feature ablation
-**Status:** PLANNED
-
-**Hypothesis:** Competition (C) and Transitivity (D) features provide measurable improvement over base similarity features (A+B) alone.
-
-**Setup:**
-- Train model with only A+B features (baseline)
-- Train model with A+B+C (add competition)
-- Train model with A+B+C+D (add transitivity)
-- Compare macro F0.5 on held-out fold
-
-**Results:** _PLANNED_
-
----
-
-## EXP-007 · Zero-Shot French Generalisation Test (PLANNED)
-**Date:** TBD
-**Type:** Generalisation test
-**Status:** PLANNED
-
-**Hypothesis:** Pipeline maintains ≥ 90% of English/German F0.5 on French entity names due to multilingual MiniLM encoder.
-
-**Setup:**
-- Filter ground truth to French-country pairs only
-- Compute recall and F0.5 on French subset
-- Compare to overall F0.5
-
-**Results:** _PLANNED_

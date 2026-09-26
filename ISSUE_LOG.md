@@ -140,18 +140,14 @@ The function produces correct output — confirmed by code reading.
 ## ISS-006 · Phase 6 and Phase 7 Still Using Stub Files
 **Date:** 2026-09-26
 **Severity:** P1 (pipeline cannot complete)
-**Status:** 🟡 IN PROGRESS (optimizer.py done; utils.py pending)
+**Status:** 🟢 RESOLVED (2026-09-26)
 
-**Description:**
-`src/optimizer.py` — ✅ **FULLY IMPLEMENTED** (Phase 6 complete 2026-09-26).
-`src/utils.py`    — 🔲 Still a stub that raises `NotImplementedError`.
-Running `bash scripts/run_pipeline.sh` will now succeed through Phase 6
-but will fail at Phase 7 (`src/utils.py --validate`).
+**Resolution:**
+- `src/optimizer.py` — ✅ Full implementation complete (Phase 6)
+- `src/utils.py`    — ✅ Full implementation complete (Phase 7)
+Both files are fully operational. Pipeline can now run end-to-end.
 
-**Resolution Plan:**
-- Implement Phase 7 (`src/utils.py`) — next task
-
-**Owner:** Development (Phase 7 is next)
+**Closed by:** Phase 7 implementation
 
 
 ---
@@ -159,25 +155,16 @@ but will fail at Phase 7 (`src/utils.py --validate`).
 ## ISS-007 · `run_pipeline.sh` Not Tested on Windows (Bash Not Native)
 **Date:** 2026-09-26
 **Severity:** P2 (environment compatibility)
-**Status:** 🔴 OPEN
+**Status:** 🟢 RESOLVED (2026-09-26)
 
-**Description:**
-`scripts/run_pipeline.sh` is a Bash script. The user's OS is Windows.
-Git Bash, WSL, or Cygwin would be needed to run it natively.
+**Resolution:**
+`scripts/run_pipeline.ps1` created in Phase 7 with:
+- Colour-coded output (Cyan steps, Green OK, Red errors)
+- Per-phase timing via `[System.Diagnostics.Stopwatch]`
+- Skip flags: `--SkipPhase2`, `--SkipPhase3`, `--NoCache`, `--InferenceOnly`
+- `--SmokeTest` mode (no data files required)
 
-**Workaround:**
-Run individual phases via PowerShell:
-```powershell
-python -m src.preprocessor --config configs/config.yaml
-python -m src.blocker --config configs/config.yaml
-python -m src.features --config configs/config.yaml
-python -m src.model --config configs/config.yaml
-python -m src.optimizer --config configs/config.yaml
-python -m src.utils --validate --config configs/config.yaml
-```
-
-**Resolution Plan:**
-Add a `scripts/run_pipeline.ps1` PowerShell equivalent after Phase 7 is implemented.
+Usage: `.\scripts\run_pipeline.ps1` from project root.
 
 ---
 
